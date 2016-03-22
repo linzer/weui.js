@@ -94,4 +94,19 @@
     $.fn.validate.noConflict = function(){
         return oldFnValidate;
     };
+    
+    $.fn.validateOne = function($input){
+        var errorMsg = _validate($input);
+        if(errorMsg){
+            var tips =
+                $input.attr(errorMsg + "Tips")
+                || $input.attr("tips")
+                || $input.attr("placeholder");
+            if(tips) $.weui.topTips(tips);
+            $input.parents(".weui_cell").addClass("weui_cell_warn");   
+            return false;
+        }else
+            $input.parents(".weui_cell").removeClass("weui_cell_warn");        
+        return true;
+    };
 })();
